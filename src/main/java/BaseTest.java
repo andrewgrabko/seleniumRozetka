@@ -5,35 +5,28 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 
 import java.io.IOException;
+
 import java.util.concurrent.TimeUnit;
 
-public class BaseTest {
+public class BaseTest extends Driver {
 
-
-    protected WebDriver driver;
-    protected WebDriverWait wait;
     protected MainPage mainPage;
     protected SmartphonePage smartphonePage;
     protected PhonesPage phonesPage;
     protected MobilePage mobilePage;
 
     @BeforeTest
-    public void initializeWebDriver() throws IOException {
-        System.setProperty("webdriver.chrome.driver", "C:\\Users\\user\\IdeaProjects\\pageObject\\drivers\\chromedriver.exe");
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        driver.get("https://rozetka.com.ua/");
-
-        mainPage = new MainPage(driver,wait);
-        smartphonePage = new SmartphonePage(driver,wait);
-        phonesPage = new PhonesPage(driver,wait);
-        mobilePage = new MobilePage(driver,wait);
+    public void initializeWebDriver() {
+        Driver.initialize();
+        mainPage = new MainPage();
+        smartphonePage = new SmartphonePage();
+        phonesPage = new PhonesPage();
+        mobilePage = new MobilePage();
     }
 
     @AfterTest
     public void quitDriver() {
-        driver.quit();
+        Driver.quit();
     }
 
 

@@ -10,23 +10,16 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 
 
-public class SmartphonePage {
-    private WebDriver driver;
-    private WebDriverWait wait;
-
-    public SmartphonePage(WebDriver driver, WebDriverWait wait) {
-        this.driver = driver;
-        this.wait = wait;
-    }
+public class SmartphonePage extends Driver {
 
     private By gpsLink = By.xpath("//a[contains(text(),', GPS')]");
 
     public PhonesPage clickGpsLink(){
-        wait = (new WebDriverWait(driver, 4));
-        wait.until(ExpectedConditions.presenceOfElementLocated(gpsLink));
+
+        wait.until(ExpectedConditions.elementToBeClickable(gpsLink));
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("window.scrollBy(0,1000)");
         driver.findElement(gpsLink).click();
-        return new PhonesPage(driver, wait);
+        return new PhonesPage();
     }
 }

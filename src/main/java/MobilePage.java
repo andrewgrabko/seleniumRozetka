@@ -13,15 +13,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-public class MobilePage {
-    private WebDriver driver;
-    private WebDriverWait wait;
-    private List<String> strings;
-
-    public MobilePage(WebDriver driver, WebDriverWait wait) {
-        this.driver = driver;
-        this.wait = wait;
-    }
+public class MobilePage extends Driver {
 
     private By valuesTitle = By.xpath("//span[text()=' Топ продаж ']/following-sibling::a[@class='goods-tile__heading']/span");
     private By valuesPrice = By.xpath("//span[text()=' Топ продаж ']/following-sibling::div[@class='goods-tile__prices']//span[@class='goods-tile__price-value']");
@@ -29,17 +21,22 @@ public class MobilePage {
     private By priceForRange = By.xpath("//span[@class='goods-tile__price-value']");
     private By dropDown = By.xpath("//select[@class='select-css ng-untouched ng-pristine ng-valid']");
     private By select = By.xpath("//option[text()=' От дешевых к дорогим ']");
+    private By moreButton = By.xpath("//span[@class='show-more__text']");
 
 
     public List<String> getLValuesTitles(){
+        wait.until(ExpectedConditions.elementToBeClickable(moreButton));
         List<WebElement> titles = driver.findElements(valuesTitle);
+
         List<String> valuesTitle = new ArrayList<>();
         for(WebElement value: titles){
             valuesTitle.add(value.getText());
         }
         return valuesTitle;
     }
+
     public List<String> getLValuesPrices(){
+        wait.until(ExpectedConditions.elementToBeClickable(moreButton));
         List<WebElement> prices = driver.findElements(valuesPrice);
         List<String> valuesPrice = new ArrayList<>();
         for(WebElement value: prices){
@@ -48,15 +45,14 @@ public class MobilePage {
         return valuesPrice;
     }
 
-    public List<String> getValuesTitlesPages(){
+    public List<String> getValuesTitlesPages(int page){
         List<String> titlePages = getLValuesTitles();
         List<String> pricePages = getLValuesPrices();
-        for (int i = 2; i<=3; i++){
+        for (int i = 2; i<=page; i++){
             String xpath = "//a[@class='pagination__link'][contains(text(),'%s')]";
             WebElement pagPage = driver.findElement(By.xpath(String.format(xpath,i)));
             pagPage.click();
-            wait = (new WebDriverWait(driver, 4));
-            wait.until(ExpectedConditions.presenceOfElementLocated(heading));
+            wait.until(ExpectedConditions.elementToBeClickable(moreButton));
             titlePages.addAll(getLValuesTitles());
             pricePages.addAll(getLValuesPrices());
         }
@@ -89,13 +85,13 @@ public class MobilePage {
 
     public MobilePage clickDropDown(){
         driver.findElement(dropDown).click();
-        wait.until(ExpectedConditions.presenceOfElementLocated(select));
+        wait.until(ExpectedConditions.elementToBeClickable(select));
         return this;
     }
 
     public MobilePage selectFilter(){
         driver.findElement(select).click();
-        wait.until(ExpectedConditions.presenceOfElementLocated(heading));
+        wait.until(ExpectedConditions.elementToBeClickable(heading));
         return this;
     }
 
