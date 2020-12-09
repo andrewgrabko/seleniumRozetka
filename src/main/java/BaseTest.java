@@ -18,6 +18,7 @@ public class BaseTest extends Driver {
     @BeforeTest
     public void initializeWebDriver() {
         Driver.initialize();
+
         mainPage = new MainPage();
         smartphonePage = new SmartphonePage();
         phonesPage = new PhonesPage();

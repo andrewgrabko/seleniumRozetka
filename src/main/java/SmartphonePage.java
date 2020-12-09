@@ -12,10 +12,10 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class SmartphonePage extends Driver {
 
+
     private By gpsLink = By.xpath("//a[contains(text(),', GPS')]");
 
     public PhonesPage clickGpsLink(){
-
         wait.until(ExpectedConditions.elementToBeClickable(gpsLink));
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("window.scrollBy(0,1000)");

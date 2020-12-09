@@ -25,9 +25,9 @@ public class MainPageTest extends BaseTest{
         mobilePage.getLValuesPrices();
         List<String> mob = mobilePage.getValuesTitlesPages(3);
         mobilePage.newFile(mob);
-        mobilePage.clickDropDown();
-        mobilePage.selectFilter();
-        mobilePage.compareRange();
+        mobilePage.clickDropDown()
+                  .selectFilter()
+                  .compareRange();
 
 
     }

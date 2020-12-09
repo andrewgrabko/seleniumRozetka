@@ -37,10 +37,5 @@ public class Driver {
         driver = null;
     }
 
-    public static void close(){
-        System.out.println("closing the browser");
-        driver.quit();
-        driver = null;
-    }
 
 }
